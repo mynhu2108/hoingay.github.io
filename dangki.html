@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Hỏi khó đáp nhanh</title>
+        <meta charset="utf8">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script>
+	check=true;
+
+    function kiemtraten(str){
+		var xmlhttp;
+		if(str==""){
+            document.getElementById("tentb").innerHTML="";
+            return check=false;
+        }
+			if(window.XMLHttpRequest) {
+				xmlhttp=new XMLHttpRequest();
+			}
+			else{
+                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+			xmlhttp.onreadystatechange=function() {
+				if(this.readyState == 4 && this.status == 200){
+					document.getElementById("error_name").innerHTML=this.responseText;
+                        if(xmlhttp.responseText!='Chuẩn!'){
+                            check=false;
+                        }
+                        else{
+                         check=true;
+                        }
+			    }
+			};
+			xmlhttp.open("GET","kiemtratontai.php?u="+str,true);
+			xmlhttp.send();
+   }
+
+   //-----------------------------------------------------------------
+
+    function kiemtra(){
+       
+        var ten=document.getElementById("myName").value;
+        if(ten==""){
+            document.getElementById("error_name").innerHTML="*Vui lòng nhập tên";
+                check =false;
+            }
+        //-------------------------------------------------------------------------
+        var mail=document.getElementById("mail").value;
+        if(mail==""){
+            document.getElementById("error_mail").innerHTML="*Vui lòng nhập email";
+            check =false;
+        }
+         //-------------------------------------------------------------------------
+         var mk=document.getElementById("mk").value;
+        if(mk==""){
+            document.getElementById("error_mk").innerHTML="*Vui lòng nhập mật khẩu";
+            check =false;
+        }
+        //-------------------------------------------------------------------------------
+        var mk2=document.getElementById("mk2").value;
+        if(mk2==""){
+            document.getElementById("error_mk2").innerHTML="*Vui lòng nhập lại mật khẩu";
+            check =false;
+            }
+        else if(mk2!=mk){
+            document.getElementById("error_mk2").innerHTML="*Mật khẩu không trùng khớp";
+            check=false;
+        }
+    return check;
+}
+
+</script>
+
+</head>
+
+
+<body>
+<div class="row " style="padding-top: 50px;">
+    <div class="col-md-6 col-sm-12 col-lg-6 col-md-offset-3">
+		<div class="panel panel-primary">
+			<div style="text-align:center; font-size: larger;" class="panel-heading">Nhập thông tin để đăng kí nào!
+			</div>
+			<div class="panel-body">
+				<form name="myform" action="dangki.php" method="POST" enctype="multipart/form-data" onsubmit="return kiemtra()">
+					<div class="form-group">
+						<label for="myName">Tên đăng nhập *</label>
+						<input id="myName" name="myName" class="form-control" type="text" data-validation="required" >
+						<span id="error_name" class="text-danger"></span>
+					</div>
+					
+					<div class="form-group">
+						<label for="mail">Email * (Hãy chắc chắn rằng đây là email của bạn!)</label>
+						<input type="email" id="mail" name="mail"  class="form-control"  >
+						<span id="error_mail" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label for="mk">Mật khẩu *</label>
+						<input type="password" name="mk" id="mk" class="form-control">
+						<span id="error_mk" class="text-danger"></span>
+					</div>
+					
+					<div class="form-group">
+						<label for="mk2">Nhắc lại mật khẩu *</label>
+						<input type="password" id="mk2" name="mk2" class="form-control" >
+						<span id="error_mk2" class="text-danger"></span>
+					</div>
+					<div style="text-align:center">
+					<button id="submit" type="submit" name="dangki" class="btn btn-primary center">Đăng kí ngay</button>
+                </div>
+				</form>
+			</div>
+            <div style="text-align:center">Bạn đã có tài khoản? <a href="dangnhap.php"> Đăng nhập</a></div>
+
+		</div>
+	</div>
+</div>
+</body>
+</html>
